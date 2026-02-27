@@ -2,6 +2,7 @@
 import os
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from rest_framework.routers import DefaultRouter
 from octofit_tracker.views import (
     api_root,
@@ -27,7 +28,7 @@ else:
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', api_root, name='api-root'),
-    path('api/', api_root, name='api-root-prefixed'),
+    path('api/', api_root, name='api-root'),
     path('api/', include(router.urls)),
+    path('', RedirectView.as_view(url='/api/', permanent=False)),
 ]
